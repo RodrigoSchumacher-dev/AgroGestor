@@ -1,0 +1,347 @@
+
+{% extends "layout.html" %}
+
+{% block conteudo %}
+
+<section class="relatorios-intro">
+    <h2>Relatórios Gerenciais</h2>
+    <p>
+        Acompanhe os resultados da sua propriedade rural
+        e tome decisões com mais informações.
+    </p>
+</section>
+
+<!-- FILTRO DE PERÍODO -->
+
+<section class="filtro-relatorios">
+    <h3>Filtrar por período</h3>
+
+    <form action="{{ url_for('reports') }}" method="GET">
+        <div class="filtro-campos">
+            <div>
+                <label for="start_date">Data inicial:</label>
+                <input
+                    type="date"
+                    id="start_date"
+                    name="start_date"
+                    value="{{ start_date or '' }}"
+                >
+            </div>
+
+            <div>
+                <label for="end_date">Data final:</label>
+                <input
+                    type="date"
+                    id="end_date"
+                    name="end_date"
+                    value="{{ end_date or '' }}"
+                >
+            </div>
+        </div>
+
+        <div class="filtro-botoes">
+            <button type="submit">Filtrar relatórios</button>
+            <a href="{{ url_for('reports') }}">Limpar filtros</a>
+        </div>
+    </form>
+</section>
+
+<!-- EXPORTAÇÃO -->
+
+<section class="exportacao-relatorios">
+    <h3>Exportar dados</h3>
+
+    <p>
+        Baixe os relatórios da sua propriedade em formato CSV
+        para abrir no Excel ou Google Planilhas.
+    </p>
+
+    <a
+        class="botao-exportar"
+        href="{{ url_for(
+            'export_reports',
+            start_date=start_date or '',
+            end_date=end_date or ''
+        ) }}"
+    >
+        <span>↓</span> Exportar relatórios (CSV)
+    </a>
+</section>
+
+<!-- 1. DESPESAS POR CATEGORIA -->
+
+<section class="relatorio-secao">
+    <h3>1. Despesas por categoria</h3>
+
+    {% if despesas_por_categoria %}
+
+        {% set maior_despesa = despesas_por_categoria | map(attribute='total') | max %}
+
+        <div class="grafico-barras">
+            {% for despesa in despesas_por_categoria %}
+                <div class="barra-item">
+                    <div class="barra-info">
+                        <strong>{{ despesa.category }}</strong>
+                        <span>R$ {{ "%.2f"|format(despesa.total) }}</span>
+                    </div>
+
+                    <div class="barra-fundo">
+                        <div
+                            class="barra preenchimento-despesa"
+                            data-width="{{ (despesa.total / maior_despesa * 100) if maior_despesa > 0 else 0 }}"
+                        ></div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Categoria</th>
+                    <th>Total gasto</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for despesa in despesas_por_categoria %}
+                    <tr>
+                        <td>{{ despesa.category }}</td>
+                        <td>R$ {{ "%.2f"|format(despesa.total) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <p>Nenhuma despesa encontrada neste período.</p>
+    {% endif %}
+</section>
+
+<!-- 2. RECEITAS POR PLANTAÇÃO -->
+
+<section class="relatorio-secao">
+    <h3>2. Receitas por plantação</h3>
+
+    {% if receitas_por_plantacao %}
+
+        {% set maior_receita = receitas_por_plantacao | map(attribute='total_revenue') | max %}
+
+        <div class="grafico-barras">
+            {% for receita in receitas_por_plantacao %}
+                <div class="barra-item">
+                    <div class="barra-info">
+                        <strong>{{ receita.crop_name }}</strong>
+                        <span>R$ {{ "%.2f"|format(receita.total_revenue) }}</span>
+                    </div>
+
+                    <div class="barra-fundo">
+                        <div
+                            class="barra preenchimento-receita"
+                            data-width="{{ (receita.total_revenue / maior_receita * 100) if maior_receita > 0 else 0 }}"
+                        ></div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Plantação</th>
+                    <th>Quantidade vendida</th>
+                    <th>Receita total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for receita in receitas_por_plantacao %}
+                    <tr>
+                        <td>{{ receita.crop_name }}</td>
+                        <td>{{ "%.2f"|format(receita.quantity_sold) }} sacas</td>
+                        <td>R$ {{ "%.2f"|format(receita.total_revenue) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <p>Nenhuma receita encontrada neste período.</p>
+    {% endif %}
+</section>
+
+<!-- 3. PRODUÇÃO E VENDAS -->
+
+<section class="relatorio-secao">
+    <h3>3. Produção e vendas por plantação</h3>
+
+    {% if producao_e_vendas %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Plantação</th>
+                    <th>Produção</th>
+                    <th>Vendas</th>
+                    <th>Diferença no período</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in producao_e_vendas %}
+                    <tr>
+                        <td>{{ item.crop_name }}</td>
+                        <td>{{ "%.2f"|format(item.total_harvested) }} sacas</td>
+                        <td>{{ "%.2f"|format(item.total_sold) }} sacas</td>
+                        <td>
+                            {{ "%.2f"|format(item.total_harvested - item.total_sold) }} sacas
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p class="observacao-relatorio">
+            A diferença representa a produção registrada menos as vendas
+            registradas dentro do período selecionado.
+        </p>
+
+        <div class="comparacao-graficos">
+            <h4>Comparação de produção e vendas</h4>
+
+            {% for item in producao_e_vendas %}
+                {% set maior_valor = [item.total_harvested, item.total_sold] | max %}
+
+                <div class="comparacao-item">
+                    <strong>{{ item.crop_name }}</strong>
+
+                    <div class="comparacao-linha">
+                        <span>Produção</span>
+
+                        <div class="comparacao-fundo">
+                            <div
+                                class="comparacao-barra barra-producao"
+                                data-width="{{ (item.total_harvested / maior_valor * 100) if maior_valor > 0 else 0 }}"
+                            ></div>
+                        </div>
+
+                        <strong>
+                            {{ "%.2f"|format(item.total_harvested) }} sacas
+                        </strong>
+                    </div>
+
+                    <div class="comparacao-linha">
+                        <span>Vendas</span>
+
+                        <div class="comparacao-fundo">
+                            <div
+                                class="comparacao-barra barra-vendas"
+                                data-width="{{ (item.total_sold / maior_valor * 100) if maior_valor > 0 else 0 }}"
+                            ></div>
+                        </div>
+
+                        <strong>
+                            {{ "%.2f"|format(item.total_sold) }} sacas
+                        </strong>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <p>Nenhuma produção ou venda encontrada neste período.</p>
+    {% endif %}
+</section>
+
+<!-- 4. RESULTADO FINANCEIRO -->
+
+<section class="relatorio-secao">
+    <h3>4. Resultado financeiro por plantação</h3>
+
+    {% if resultado_por_plantacao %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Plantação</th>
+                    <th>Receitas</th>
+                    <th>Despesas</th>
+                    <th>Saldo</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for resultado in resultado_por_plantacao %}
+                    <tr>
+                        <td>{{ resultado.crop_name }}</td>
+                        <td>R$ {{ "%.2f"|format(resultado.total_revenue) }}</td>
+                        <td>R$ {{ "%.2f"|format(resultado.total_expenses) }}</td>
+                        <td>R$ {{ "%.2f"|format(resultado.balance) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="comparacao-graficos">
+            <h4>Comparação financeira</h4>
+
+            {% for resultado in resultado_por_plantacao %}
+                {% set maior_valor = [resultado.total_revenue, resultado.total_expenses] | max %}
+
+                <div class="comparacao-item">
+                    <strong>{{ resultado.crop_name }}</strong>
+
+                    <div class="comparacao-linha">
+                        <span>Receitas</span>
+
+                        <div class="comparacao-fundo">
+                            <div
+                                class="comparacao-barra barra-receitas"
+                                data-width="{{ (resultado.total_revenue / maior_valor * 100) if maior_valor > 0 else 0 }}"
+                            ></div>
+                        </div>
+
+                        <strong>
+                            R$ {{ "%.2f"|format(resultado.total_revenue) }}
+                        </strong>
+                    </div>
+
+                    <div class="comparacao-linha">
+                        <span>Despesas</span>
+
+                        <div class="comparacao-fundo">
+                            <div
+                                class="comparacao-barra barra-despesas"
+                                data-width="{{ (resultado.total_expenses / maior_valor * 100) if maior_valor > 0 else 0 }}"
+                            ></div>
+                        </div>
+
+                        <strong>
+                            R$ {{ "%.2f"|format(resultado.total_expenses) }}
+                        </strong>
+                    </div>
+
+                    <div class="saldo-destaque">
+                        Saldo:
+                        <strong>
+                            R$ {{ "%.2f"|format(resultado.balance) }}
+                        </strong>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <p>Nenhuma informação financeira encontrada.</p>
+    {% endif %}
+</section>
+
+<!-- VOLTAR AO PAINEL -->
+
+<p class="voltar-painel">
+    <a href="{{ url_for('dashboard') }}">Voltar ao painel</a>
+</p>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+{% endblock %}

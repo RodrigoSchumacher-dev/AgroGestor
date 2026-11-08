@@ -1,0 +1,94 @@
+
+{% extends "layout.html" %}
+
+{% block conteudo %}
+
+<div class="formulario-container">
+
+    <div class="formulario-card">
+
+        <div class="formulario-cabecalho">
+            <div class="formulario-icone">💰</div>
+            <h2>Cadastrar Despesa</h2>
+            <p>Registre os gastos da sua propriedade e mantenha seu controle financeiro atualizado.</p>
+        </div>
+
+        <form action="{{ url_for('expenses_register') }}" method="POST" class="formulario-agro">
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="campo-formulario">
+                <label for="description">Descrição da despesa</label>
+                <input
+                    type="text"
+                    id="description"
+                    name="description"
+                    placeholder="Ex: Compra de sementes"
+                    required
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="category">Categoria</label>
+                <select id="category" name="category" required>
+                    <option value="">Selecione uma categoria</option>
+                    <option value="Insumos">Insumos</option>
+                    <option value="Combustível">Combustível</option>
+                    <option value="Máquinas">Máquinas</option>
+                    <option value="Manutenção">Manutenção</option>
+                    <option value="Mão de obra">Mão de obra</option>
+                    <option value="Outros">Outros</option>
+                </select>
+            </div>
+
+            <div class="campo-formulario">
+                <label for="amount">Valor da despesa (R$)</label>
+                <input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    step="0.01"
+                    min="0.01"
+                    placeholder="Ex: 250.00"
+                    required
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="expense_date">Data da despesa</label>
+                <input
+                    type="date"
+                    id="expense_date"
+                    name="expense_date"
+                    required
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="planting_id">Plantação relacionada (opcional)</label>
+                <select id="planting_id" name="planting_id">
+                    <option value="">Despesa geral da propriedade</option>
+
+                    {% for plantacao in plantacoes %}
+                        <option value="{{ plantacao.id }}">
+                            {{ plantacao.crop_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="botao-formulario">
+                Cadastrar Despesa
+            </button>
+
+        </form>
+
+        <a href="{{ url_for('dashboard') }}" class="voltar-painel">
+            ← Voltar ao Painel
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

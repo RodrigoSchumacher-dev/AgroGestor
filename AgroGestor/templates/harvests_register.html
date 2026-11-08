@@ -1,0 +1,80 @@
+
+{% extends "layout.html" %}
+
+{% block conteudo %}
+
+<div class="formulario-container">
+
+    <div class="formulario-card">
+
+        <div class="formulario-cabecalho">
+            <div class="formulario-icone">🌾</div>
+            <h2>Cadastrar Colheita</h2>
+            <p>Registre a produção obtida em suas plantações e acompanhe os resultados da propriedade.</p>
+        </div>
+
+        <form action="{{ url_for('harvests_register') }}" method="POST" class="formulario-agro">
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="campo-formulario">
+                <label for="planting_id">Plantação</label>
+                <select name="planting_id" id="planting_id" required>
+                    <option value="">Selecione uma plantação</option>
+
+                    {% for plantacao in plantacoes %}
+                        <option value="{{ plantacao.id }}">
+                            {{ plantacao.crop_name }} - {{ plantacao.area }} hectares
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="campo-formulario">
+                <label for="quantity">Quantidade produzida (sacas)</label>
+                <input
+                    type="number"
+                    name="quantity"
+                    id="quantity"
+                    min="0.01"
+                    step="0.01"
+                    placeholder="Ex: 150.50"
+                    required
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="harvest_date">Data da colheita</label>
+                <input
+                    type="date"
+                    name="harvest_date"
+                    id="harvest_date"
+                    required
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="notes">Observações (opcional)</label>
+                <textarea
+                    name="notes"
+                    id="notes"
+                    rows="4"
+                    placeholder="Adicione informações sobre a colheita..."
+                ></textarea>
+            </div>
+
+            <button type="submit" class="botao-formulario">
+                Cadastrar Colheita
+            </button>
+
+        </form>
+
+        <a href="{{ url_for('dashboard') }}" class="voltar-painel">
+            ← Voltar ao Painel
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

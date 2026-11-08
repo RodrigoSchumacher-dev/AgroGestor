@@ -1,0 +1,295 @@
+
+{% extends "layout.html" %}
+
+{% block conteudo %}
+
+<section class="painel-intro">
+    <h2>Painel do Produtor</h2>
+    <p>Bem-vindo ao seu espaço de gestão rural!</p>
+    <p>Acompanhe as atividades e os resultados da sua propriedade.</p>
+</section>
+
+<section class="card-relatorios">
+    <div>
+        <h3>Relatórios Gerenciais</h3>
+        <p>
+            Consulte despesas, receitas, produção e resultados financeiros
+            da sua propriedade.
+        </p>
+    </div>
+
+    <a href="{{ url_for('reports') }}" class="botao">
+        Acessar relatórios
+    </a>
+</section>
+
+<section class="painel-card">
+    <h3>Minhas Plantações</h3>
+
+    <p>
+        <a href="{{ url_for('plantings_register') }}" class="link-acao">
+            + Cadastrar nova plantação
+        </a>
+    </p>
+
+    {% if plantacoes %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Cultura</th>
+                    <th>Área (hectares)</th>
+                    <th>Data do plantio</th>
+                    <th>Status</th>
+                    <th>Estoque disponível</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for plantacao in plantacoes %}
+                    <tr>
+                        <td>{{ plantacao.crop_name }}</td>
+                        <td>{{ plantacao.area }}</td>
+                        <td>{{ plantacao.planting_date }}</td>
+                        <td>{{ plantacao.status }}</td>
+                        <td>
+                            <strong>
+                                {{ "%.2f"|format(estoque_por_plantacao.get(plantacao.id, 0)) }}
+                                sacas
+                            </strong>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('edit_planting', planting_id=plantacao.id) }}">
+                                Editar
+                            </a>
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('delete_planting_route', planting_id=plantacao.id) }}"
+                                onsubmit="return confirm('Deseja realmente excluir esta plantação?');"
+                            >
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhuma plantação cadastrada.</p>
+    {% endif %}
+</section>
+
+<section class="painel-card">
+    <h3>Minhas Despesas</h3>
+
+    <p>
+        <a href="{{ url_for('expenses_register') }}" class="link-acao">
+            + Cadastrar nova despesa
+        </a>
+    </p>
+
+    {% if despesas %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
+                    <th>Valor</th>
+                    <th>Data</th>
+                    <th>Plantação</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for despesa in despesas %}
+                    <tr>
+                        <td>{{ despesa.description }}</td>
+                        <td>{{ despesa.category }}</td>
+                        <td>R$ {{ "%.2f"|format(despesa.amount) }}</td>
+                        <td>{{ despesa.expense_date }}</td>
+                        <td>{{ despesa.crop_name or "Geral" }}</td>
+                        <td>
+                            <form
+                                method="POST"
+                                action="{{ url_for('delete_expense_route', expense_id=despesa.id) }}"
+                                onsubmit="return confirm('Deseja realmente excluir esta despesa?');"
+                            >
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhuma despesa cadastrada.</p>
+    {% endif %}
+</section>
+
+<section class="painel-card">
+    <h3>Minhas Colheitas</h3>
+
+    <p>
+        <a href="{{ url_for('harvests_register') }}" class="link-acao">
+            + Cadastrar nova colheita
+        </a>
+    </p>
+
+    {% if colheitas %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Cultura</th>
+                    <th>Quantidade (sacas)</th>
+                    <th>Data da colheita</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for colheita in colheitas %}
+                    <tr>
+                        <td>{{ colheita.crop_name }}</td>
+                        <td>{{ "%.2f"|format(colheita.quantity) }}</td>
+                        <td>{{ colheita.harvest_date }}</td>
+                        <td>
+                            <form
+                                method="POST"
+                                action="{{ url_for('delete_harvest_route', harvest_id=colheita.id) }}"
+                                onsubmit="return confirm('Deseja realmente excluir esta colheita?');"
+                            >
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhuma colheita cadastrada.</p>
+    {% endif %}
+</section>
+
+<section class="painel-card">
+    <h3>Resultados da Produção</h3>
+
+    <div class="indicador-producao">
+        <span>Produção total registrada</span>
+        <strong>{{ "%.2f"|format(total_producao) }} sacas</strong>
+    </div>
+
+    {% if resumo_colheitas %}
+        <h4>Produtividade por plantação</h4>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Cultura</th>
+                    <th>Área (hectares)</th>
+                    <th>Produção (sacas)</th>
+                    <th>Produtividade (sacas/hectare)</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for resultado in resumo_colheitas %}
+                    <tr>
+                        <td>{{ resultado.crop_name }}</td>
+                        <td>{{ resultado.area }}</td>
+                        <td>{{ "%.2f"|format(resultado.total_quantity) }}</td>
+                        <td>{{ "%.2f"|format(resultado.productivity) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Ainda não existem resultados de produção.</p>
+    {% endif %}
+</section>
+
+<section class="painel-card">
+    <h3>Minhas Vendas</h3>
+
+    <p>
+        <a href="{{ url_for('sales_register') }}" class="link-acao">
+            + Registrar nova venda
+        </a>
+    </p>
+
+    {% if vendas %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Cultura</th>
+                    <th>Quantidade (sacas)</th>
+                    <th>Preço por saca</th>
+                    <th>Valor total</th>
+                    <th>Data da venda</th>
+                    <th>Observações</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for venda in vendas %}
+                    <tr>
+                        <td>{{ venda.crop_name }}</td>
+                        <td>{{ "%.2f"|format(venda.quantity) }}</td>
+                        <td>R$ {{ "%.2f"|format(venda.price_per_unit) }}</td>
+                        <td>R$ {{ "%.2f"|format(venda.total_value) }}</td>
+                        <td>{{ venda.sale_date }}</td>
+                        <td>{{ venda.notes or "-" }}</td>
+                        <td>
+                            <form
+                                method="POST"
+                                action="{{ url_for('delete_sale_route', sale_id=venda.id) }}"
+                                onsubmit="return confirm('Deseja realmente excluir esta venda?');"
+                            >
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhuma venda cadastrada.</p>
+    {% endif %}
+</section>
+
+<section class="painel-card financeiro">
+    <h3>Resultados Financeiros</h3>
+
+    <div class="financeiro-indicadores">
+
+        <div class="financeiro-item">
+            <span>Total de despesas</span>
+            <strong>
+                R$ {{ "%.2f"|format(resumo_financeiro.total_despesas) }}
+            </strong>
+        </div>
+
+        <div class="financeiro-item">
+            <span>Total de receitas</span>
+            <strong>
+                R$ {{ "%.2f"|format(resumo_financeiro.total_receitas) }}
+            </strong>
+        </div>
+
+        <div class="financeiro-item">
+            <span>Saldo</span>
+            <strong>
+                R$ {{ "%.2f"|format(resumo_financeiro.saldo) }}
+            </strong>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

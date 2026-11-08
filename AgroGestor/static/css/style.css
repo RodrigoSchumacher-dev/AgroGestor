@@ -1,0 +1,1403 @@
+/* CONFIGURAÇÕES GERAIS */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #F7F5EF;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* CABEÇALHO */
+
+header {
+    background-color: #294B35;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 5px;
+    font-size: 32px;
+}
+
+/* CONTEÚDO PRINCIPAL */
+
+main {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 12px;
+}
+
+/* DESTAQUE PRINCIPAL */
+
+.hero {
+    background-color: #294B35;
+    color: white;
+    padding: 55px 30px;
+    text-align: center;
+    border-radius: 12px;
+    margin-bottom: 45px;
+}
+
+.hero h2 {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: 0 auto 25px;
+    font-size: 17px;
+}
+
+/* BOTÕES */
+
+.hero-botoes {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.botao,
+.botao-secundario {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.botao {
+    background-color: #E8E0CF;
+    color: #294B35;
+}
+
+.botao:hover {
+    background-color: white;
+}
+
+.botao-secundario {
+    border: 2px solid white;
+    color: white;
+}
+
+.botao-secundario:hover {
+    background-color: white;
+    color: #294B35;
+}
+
+/* APRESENTAÇÃO */
+
+.sobre {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sobre h2 {
+    color: #294B35;
+    font-size: 27px;
+}
+
+/* FUNCIONALIDADES */
+
+.funcionalidades {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 30px 0 45px;
+}
+
+.funcionalidade {
+    background-color: #F7F5EF;
+    padding: 25px;
+    border-radius: 10px;
+    border-left: 5px solid #79583D;
+    transition: 0.3s;
+}
+
+.funcionalidade:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.funcionalidade h3 {
+    color: #294B35;
+    margin-top: 0;
+}
+
+/* CHAMADA FINAL */
+
+.chamada-final {
+    background-color: #E8E0CF;
+    padding: 35px 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.chamada-final h2 {
+    color: #294B35;
+}
+
+/* MENSAGENS */
+
+.mensagem {
+    padding: 12px;
+    border-radius: 6px;
+    margin: 15px 0;
+}
+
+/* RODAPÉ */
+
+footer {
+    background-color: #79583D;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 600px) {
+    main {
+        margin: 15px;
+        padding: 18px;
+    }
+
+    .hero {
+        padding: 35px 18px;
+    }
+
+    .hero h2 {
+        font-size: 26px;
+    }
+
+    .hero-botoes {
+        flex-direction: column;
+    }
+
+    .hero-botoes a {
+        width: 100%;
+    }
+}
+
+/* CABEÇALHO ORGANIZADO */
+
+header {
+    padding: 20px 30px;
+}
+
+.cabecalho-conteudo {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.marca {
+    text-align: left;
+}
+
+.marca h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+.marca h1 a {
+    color: white;
+    text-decoration: none;
+}
+
+.marca p {
+    margin: 3px 0 0;
+    font-size: 14px;
+}
+
+/* MENU DE NAVEGAÇÃO */
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background-color: #42664B;
+}
+
+/* RODAPÉ */
+
+footer {
+    background-color: #79583D;
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 40px;
+}
+
+footer h3 {
+    margin: 0 0 5px;
+    font-size: 22px;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+.copyright {
+    margin-top: 20px;
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+/* AJUSTES PARA CELULAR */
+
+@media (max-width: 600px) {
+    .cabecalho-conteudo {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .marca {
+        text-align: center;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    nav a {
+        padding: 8px 10px;
+    }
+}
+
+
+/* =================================
+   PAINEL DO PRODUTOR
+================================= */
+
+.painel-intro {
+    margin-bottom: 30px;
+}
+
+.painel-intro h2 {
+    color: #294B35;
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+.painel-intro p {
+    color: #666;
+}
+
+/* CARTÃO DE RELATÓRIOS */
+
+.card-relatorios {
+    background-color: #294B35;
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card-relatorios h3 {
+    margin-top: 0;
+    font-size: 22px;
+}
+
+.card-relatorios p {
+    margin-bottom: 0;
+}
+
+/* CARTÕES DAS SEÇÕES */
+
+.painel-card {
+    background-color: #fff;
+    border: 1px solid #E8E0CF;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+.painel-card h3 {
+    color: #294B35;
+    font-size: 21px;
+    margin-top: 0;
+    border-bottom: 2px solid #E8E0CF;
+    padding-bottom: 12px;
+}
+
+.painel-card h4 {
+    color: #79583D;
+}
+
+/* LINKS DE CADASTRO */
+
+.link-acao {
+    display: inline-block;
+    color: #294B35;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 8px 0 15px;
+}
+
+.link-acao:hover {
+    color: #79583D;
+    text-decoration: underline;
+}
+
+/* TABELAS */
+
+.painel-card table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.painel-card th {
+    background-color: #294B35;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.painel-card td {
+    padding: 12px;
+    border-bottom: 1px solid #E8E0CF;
+}
+
+.painel-card tbody tr:hover {
+    background-color: #F7F5EF;
+}
+
+/* FORMULÁRIO DE EXCLUSÃO NA TABELA */
+
+.painel-card td form {
+    display: inline-block;
+    margin-left: 8px;
+}
+
+/* INDICADOR DE PRODUÇÃO */
+
+.indicador-producao {
+    background-color: #F7F5EF;
+    border-left: 5px solid #79583D;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.indicador-producao span,
+.financeiro-item span {
+    display: block;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.indicador-producao strong {
+    display: block;
+    color: #294B35;
+    font-size: 26px;
+}
+
+/* RESULTADOS FINANCEIROS */
+
+.financeiro {
+    background-color: #F7F5EF;
+}
+
+.financeiro-indicadores {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.financeiro-item {
+    background-color: white;
+    padding: 22px;
+    border-radius: 8px;
+    border-bottom: 4px solid #79583D;
+}
+
+.financeiro-item strong {
+    display: block;
+    color: #294B35;
+    font-size: 21px;
+}
+
+/* RESPONSIVIDADE DO PAINEL */
+
+@media (max-width: 700px) {
+    .card-relatorios {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .financeiro-indicadores {
+        grid-template-columns: 1fr;
+    }
+
+    .painel-card {
+        padding: 15px;
+        overflow-x: auto;
+    }
+
+    .painel-card table {
+        min-width: 600px;
+    }
+
+    .painel-intro h2 {
+        font-size: 25px;
+    }
+}
+
+
+/* =================================
+   RELATÓRIOS GERENCIAIS
+================================= */
+
+.relatorios-intro {
+    margin-bottom: 30px;
+}
+
+.relatorios-intro h2 {
+    color: #294B35;
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.relatorios-intro p {
+    color: #666;
+}
+
+/* FILTRO DE PERÍODO */
+
+.filtro-relatorios {
+    background-color: #F7F5EF;
+    border: 1px solid #E8E0CF;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.filtro-relatorios h3 {
+    color: #294B35;
+    margin-top: 0;
+}
+
+.filtro-campos {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.filtro-campos div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filtro-campos label {
+    font-weight: bold;
+    color: #444;
+}
+
+.filtro-campos input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: Arial, sans-serif;
+}
+
+.filtro-botoes {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.filtro-botoes button {
+    background-color: #294B35;
+    color: white;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.filtro-botoes button:hover {
+    background-color: #1D3827;
+}
+
+.filtro-botoes a {
+    color: #79583D;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.filtro-botoes a:hover {
+    text-decoration: underline;
+}
+
+/* SEÇÕES DOS RELATÓRIOS */
+
+.relatorio-secao {
+    background-color: white;
+    border: 1px solid #E8E0CF;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+.relatorio-secao h3 {
+    color: #294B35;
+    font-size: 21px;
+    margin-top: 0;
+    margin-bottom: 22px;
+    border-bottom: 2px solid #E8E0CF;
+    padding-bottom: 12px;
+}
+
+/* GRÁFICOS DE BARRAS */
+
+.grafico-barras {
+    margin: 20px 0 30px;
+}
+
+.barra-item {
+    margin-bottom: 20px;
+}
+
+.barra-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 8px;
+}
+
+.barra-info strong {
+    color: #444;
+}
+
+.barra-info span {
+    color: #666;
+    font-weight: bold;
+}
+
+.barra-fundo {
+    width: 100%;
+    height: 16px;
+    background-color: #E8E0CF;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.barra {
+    height: 100%;
+    border-radius: 20px;
+    min-width: 3px;
+}
+
+.preenchimento-despesa {
+    background-color: #79583D;
+}
+
+.preenchimento-receita {
+    background-color: #294B35;
+}
+
+/* TABELAS DOS RELATÓRIOS */
+
+.relatorio-secao table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.relatorio-secao th {
+    background-color: #294B35;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.relatorio-secao td {
+    padding: 12px;
+    border-bottom: 1px solid #E8E0CF;
+}
+
+.relatorio-secao tbody tr:hover {
+    background-color: #F7F5EF;
+}
+
+.observacao-relatorio {
+    background-color: #F7F5EF;
+    border-left: 4px solid #79583D;
+    padding: 12px;
+    color: #666;
+    margin-top: 18px;
+}
+
+/* VOLTAR AO PAINEL */
+
+.voltar-painel {
+    margin-top: 30px;
+}
+
+.voltar-painel a {
+    display: inline-block;
+    background-color: #79583D;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.voltar-painel a:hover {
+    background-color: #60432E;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 700px) {
+
+    .relatorios-intro h2 {
+        font-size: 25px;
+    }
+
+    .filtro-relatorios,
+    .relatorio-secao {
+        padding: 15px;
+    }
+
+    .filtro-campos {
+        flex-direction: column;
+    }
+
+    .filtro-campos input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .barra-info {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .relatorio-secao {
+        overflow-x: auto;
+    }
+
+    .relatorio-secao table {
+        min-width: 550px;
+    }
+}
+
+/* GRÁFICOS DE COMPARAÇÃO */
+
+.comparacao-graficos {
+    display: block;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #F7F5EF;
+    border-radius: 10px;
+}
+
+.comparacao-graficos h4 {
+    color: #294B35;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.comparacao-item {
+    display: block;
+    margin-bottom: 30px;
+}
+
+.comparacao-item > strong {
+    display: block;
+    color: #294B35;
+    margin-bottom: 15px;
+    font-size: 17px;
+}
+
+.comparacao-linha {
+    display: grid;
+    grid-template-columns: 90px minmax(100px, 1fr) 150px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.comparacao-linha > span {
+    color: #555;
+    font-size: 14px;
+}
+
+.comparacao-linha > strong {
+    color: #444;
+    font-size: 13px;
+    text-align: right;
+}
+
+.comparacao-fundo {
+    width: 100%;
+    height: 18px;
+    background-color: #E8E0CF;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.comparacao-barra {
+    height: 100%;
+    border-radius: 20px;
+    min-width: 0;
+}
+
+.barra-producao,
+.barra-receitas {
+    background-color: #294B35;
+}
+
+.barra-vendas {
+    background-color: #B58A42;
+}
+
+.barra-despesas {
+    background-color: #79583D;
+}
+
+.saldo-destaque {
+    margin-top: 15px;
+    padding: 12px;
+    background-color: white;
+    border-left: 4px solid #294B35;
+    color: #555;
+}
+
+.saldo-destaque strong {
+    color: #294B35;
+    margin-left: 5px;
+}
+
+@media (max-width: 700px) {
+    .comparacao-linha {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .comparacao-linha > strong {
+        text-align: left;
+    }
+}
+
+/* EXPORTAÇÃO DOS RELATÓRIOS */
+
+.exportacao-relatorios {
+    margin: 25px 0;
+    padding: 20px;
+    background-color: #E8E0CF;
+    border-radius: 10px;
+}
+
+.exportacao-relatorios h3 {
+    color: #294B35;
+    margin-top: 0;
+}
+
+.botao-exportar {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 12px 20px;
+    background-color: #294B35;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.botao-exportar:hover {
+    background-color: #1E3827;
+}
+
+.botao-exportar span {
+    margin-right: 6px;
+    font-size: 18px;
+}
+
+/* INDICADORES FINANCEIROS DO PAINEL */
+
+.financeiro-indicadores {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.financeiro-item {
+    background-color: #F7F5EF;
+    border-left: 5px solid #79583D;
+    border-radius: 8px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.financeiro-item span {
+    color: #555;
+    font-size: 15px;
+}
+
+.financeiro-item strong {
+    color: #294B35;
+    font-size: 24px;
+}
+
+.financeiro-item:last-child {
+    border-left-color: #294B35;
+    background-color: #E8E0CF;
+}
+
+/* ADAPTAÇÃO PARA CELULARES */
+
+@media (max-width: 700px) {
+    .financeiro-indicadores {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =================================
+   REFINAMENTO VISUAL DO AGROGESTOR
+================================= */
+
+/* CENTRALIZAÇÃO DO CONTEÚDO */
+
+main {
+    max-width: 1200px;
+    width: calc(100% - 40px);
+    margin: 35px auto;
+    padding: 35px;
+}
+
+.painel-intro,
+.relatorios-intro {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.painel-intro p,
+.relatorios-intro p {
+    max-width: 700px;
+    margin: 8px auto;
+}
+
+.card-relatorios {
+    justify-content: center;
+    text-align: center;
+}
+
+.card-relatorios > div {
+    flex: 1;
+}
+
+.painel-card,
+.relatorio-secao {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.painel-card h3,
+.relatorio-secao h3 {
+    text-align: center;
+}
+
+/* TABELAS MAIS ORGANIZADAS */
+
+.painel-card table,
+.relatorio-secao table {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.painel-card th,
+.relatorio-secao th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.painel-card td,
+.relatorio-secao td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* ALINHAMENTO DOS NÚMEROS À DIREITA */
+
+/* Despesas */
+.painel-card:nth-of-type(3) td:nth-child(3) {
+    text-align: right;
+}
+
+/* Colheitas */
+.painel-card:nth-of-type(4) td:nth-child(2) {
+    text-align: right;
+}
+
+/* Resultados da produção */
+.painel-card:nth-of-type(5) td:nth-child(n+2) {
+    text-align: right;
+}
+
+/* Vendas */
+.painel-card:nth-of-type(6) td:nth-child(n+2):nth-child(-n+4) {
+    text-align: right;
+}
+
+/* NÚMEROS MAIS LEGÍVEIS */
+
+.painel-card td,
+.relatorio-secao td,
+.financeiro-item strong,
+.indicador-producao strong,
+.comparacao-linha > strong {
+    font-variant-numeric: tabular-nums;
+}
+
+.indicador-producao {
+    text-align: center;
+    max-width: 550px;
+    margin: 25px auto;
+    padding: 28px;
+}
+
+.indicador-producao strong {
+    font-size: 34px;
+    letter-spacing: 0.5px;
+}
+
+.financeiro-indicadores {
+    max-width: 950px;
+    margin: 25px auto 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.financeiro-item {
+    text-align: center;
+    justify-content: center;
+    min-height: 145px;
+}
+
+.financeiro-item span {
+    font-size: 15px;
+}
+
+.financeiro-item strong {
+    font-size: 26px;
+    overflow-wrap: anywhere;
+}
+
+/* GRÁFICOS MAIS ORGANIZADOS */
+
+.grafico-barras,
+.comparacao-graficos {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.comparacao-graficos h4 {
+    text-align: center;
+}
+
+/* BOTÕES NAS TABELAS */
+
+.painel-card td form {
+    margin: 0;
+}
+
+.painel-card td button {
+    padding: 7px 13px;
+    border: none;
+    border-radius: 5px;
+    background-color: #79583D;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.painel-card td button:hover {
+    background-color: #60432E;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 700px) {
+    main {
+        width: calc(100% - 20px);
+        margin: 15px auto;
+        padding: 18px;
+    }
+
+    .financeiro-indicadores {
+        grid-template-columns: 1fr;
+    }
+
+    .financeiro-item {
+        min-height: 120px;
+    }
+
+    .indicador-producao strong {
+        font-size: 28px;
+    }
+
+    .painel-card {
+        overflow-x: auto;
+    }
+}
+
+/* =================================
+   LOGIN E CADASTRO
+================================= */
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 15px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 470px;
+    padding: 38px;
+    background-color: #F7F5EF;
+    border: 1px solid #E8E0CF;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+    text-align: center;
+}
+
+.auth-icon {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E8E0CF;
+    border-radius: 50%;
+    font-size: 30px;
+}
+
+.auth-card h2 {
+    color: #294B35;
+    font-size: 27px;
+    margin: 0 0 10px;
+}
+
+.auth-descricao {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 auto 28px;
+    max-width: 340px;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    text-align: left;
+}
+
+.auth-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.auth-campo label {
+    color: #294B35;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.auth-campo input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #D5CCBA;
+    border-radius: 8px;
+    background-color: white;
+    color: #333;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.auth-campo input:focus {
+    border-color: #294B35;
+    box-shadow: 0 0 0 3px rgba(41, 75, 53, 0.12);
+}
+
+.auth-botao {
+    width: 100%;
+    margin-top: 8px;
+    padding: 14px;
+    background-color: #294B35;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-botao:hover {
+    background-color: #1D3827;
+    transform: translateY(-2px);
+}
+
+.auth-alternativa {
+    margin: 25px 0 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.auth-alternativa a {
+    color: #294B35;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.auth-alternativa a:hover {
+    color: #79583D;
+    text-decoration: underline;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 600px) {
+    .auth-container {
+        padding: 10px 0;
+    }
+
+    .auth-card {
+        padding: 28px 20px;
+    }
+
+    .auth-card h2 {
+        font-size: 24px;
+    }
+}
+
+/* =================================
+   FORMULÁRIOS DO AGROGESTOR
+================================= */
+
+.formulario-container {
+    display: flex;
+    justify-content: center;
+    padding: 30px 15px;
+}
+
+.formulario-card {
+    width: 100%;
+    max-width: 550px;
+    padding: 35px;
+    background: #F7F5EF;
+    border: 1px solid #E8E0CF;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+}
+
+.formulario-cabecalho {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.formulario-icone {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #E8E0CF;
+    border-radius: 50%;
+    font-size: 30px;
+}
+
+.formulario-cabecalho h2 {
+    color: #294B35;
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.formulario-cabecalho p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.formulario-agro {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.campo-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo-formulario label {
+    color: #294B35;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.campo-formulario input,
+.campo-formulario select,
+.campo-formulario textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #D5CCBA;
+    border-radius: 8px;
+    background: white;
+    color: #333;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.campo-formulario input:focus,
+.campo-formulario select:focus,
+.campo-formulario textarea:focus {
+    border-color: #294B35;
+    box-shadow: 0 0 0 3px rgba(41, 75, 53, 0.12);
+}
+
+.botao-formulario {
+    width: 100%;
+    padding: 14px;
+    margin-top: 8px;
+    background: #294B35;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.botao-formulario:hover {
+    background: #1D3827;
+    transform: translateY(-2px);
+}
+
+.voltar-painel {
+    display: block;
+    margin-top: 25px;
+    text-align: center;
+    color: #79583D;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.voltar-painel:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .formulario-card {
+        padding: 25px 20px;
+    }
+
+    .formulario-cabecalho h2 {
+        font-size: 23px;
+    }
+}
+/* INDICADOR DE ESTOQUE NO CADASTRO DE VENDAS */
+
+.painel-estoque {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0 20px;
+    padding: 22px;
+    background-color: #E8E0CF;
+    border: 1px solid #D5CCBA;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.painel-estoque[hidden] {
+    display: none;
+}
+
+.estoque-titulo {
+    color: #294B35;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.painel-estoque strong {
+    color: #294B35;
+    font-size: 30px;
+    font-variant-numeric: tabular-nums;
+}
+
+#estoque-mensagem {
+    color: #79583D;
+    font-size: 13px;
+}
+
+#botao-venda:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+    transform: none;
+    opacity: 0.7;
+}

@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block conteudo %}
+
+<section class="hero">
+    <h2>Gestão rural simples e inteligente</h2>
+
+    <p>
+        Organize sua propriedade rural, acompanhe suas plantações
+        e tenha controle sobre os resultados do seu negócio.
+    </p>
+
+    <div class="hero-botoes">
+
+        {% if session.get("user_id") %}
+
+            <a href="{{ url_for('dashboard') }}" class="botao">
+                Acessar meu painel
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('register') }}" class="botao">
+                Começar agora
+            </a>
+
+            <a href="{{ url_for('login') }}" class="botao-secundario">
+                Já tenho uma conta
+            </a>
+
+        {% endif %}
+
+    </div>
+</section>
+
+<section class="sobre">
+    <h2>Tudo o que sua propriedade precisa</h2>
+
+    <p>
+        O AgroGestor reúne ferramentas para facilitar o gerenciamento
+        das atividades e das finanças da sua propriedade.
+    </p>
+</section>
+
+<section class="funcionalidades">
+
+    <article class="funcionalidade">
+        <h3>Plantações</h3>
+        <p>Cadastre suas culturas e organize suas plantações.</p>
+    </article>
+
+    <article class="funcionalidade">
+        <h3>Despesas</h3>
+        <p>Registre os gastos e acompanhe suas despesas.</p>
+    </article>
+
+    <article class="funcionalidade">
+        <h3>Colheitas</h3>
+        <p>Registre sua produção e acompanhe a produtividade.</p>
+    </article>
+
+    <article class="funcionalidade">
+        <h3>Vendas</h3>
+        <p>Controle as quantidades vendidas e suas receitas.</p>
+    </article>
+
+    <article class="funcionalidade">
+        <h3>Relatórios</h3>
+        <p>Consulte informações financeiras e resultados da produção.</p>
+    </article>
+
+</section>
+
+<section class="chamada-final">
+    {% if session.get("user_id") %}
+
+        <h2>Sua propriedade está esperando por você!</h2>
+
+        <p>
+            Continue acompanhando suas atividades e os resultados
+            da sua gestão rural.
+        </p>
+
+        <a href="{{ url_for('dashboard') }}" class="botao">
+            Ir para meu painel
+        </a>
+
+    {% else %}
+
+        <h2>Comece a organizar sua propriedade hoje!</h2>
+
+        <p>Tenha mais controle e clareza sobre a gestão rural.</p>
+
+        <a href="{{ url_for('register') }}" class="botao">
+            Criar minha conta
+        </a>
+
+    {% endif %}
+</section>
+
+{% endblock %}

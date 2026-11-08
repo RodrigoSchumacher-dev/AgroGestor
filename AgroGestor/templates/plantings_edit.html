@@ -1,0 +1,100 @@
+
+{% extends "layout.html" %}
+
+{% block conteudo %}
+
+<section class="formulario-container">
+
+    <div class="formulario-card">
+
+        <div class="formulario-cabecalho">
+            <div class="formulario-icone">📝</div>
+
+            <h2>Editar Plantação</h2>
+
+            <p>
+                Atualize as informações da sua cultura e mantenha
+                o planejamento da propriedade organizado.
+            </p>
+        </div>
+
+        <form
+            action="{{ url_for('edit_planting', planting_id=plantacao.id) }}"
+            method="POST"
+            class="formulario-agro"
+        >
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="campo-formulario">
+                <label for="crop_name">Nome da cultura</label>
+                <input
+                    type="text"
+                    id="crop_name"
+                    name="crop_name"
+                    value="{{ plantacao.crop_name }}"
+                    placeholder="Ex: Soja, Milho, Feijão"
+                    required
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="area">Área plantada (hectares)</label>
+                <input
+                    type="number"
+                    id="area"
+                    name="area"
+                    step="0.01"
+                    min="0.01"
+                    value="{{ plantacao.area }}"
+                    required
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="planting_date">Data do plantio</label>
+                <input
+                    type="date"
+                    id="planting_date"
+                    name="planting_date"
+                    value="{{ plantacao.planting_date }}"
+                    required
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="status">Status da plantação</label>
+
+                <select id="status" name="status" required>
+                    <option value="Planejada"
+                        {% if plantacao.status == "Planejada" %}selected{% endif %}>
+                        Planejada
+                    </option>
+
+                    <option value="Em andamento"
+                        {% if plantacao.status == "Em andamento" %}selected{% endif %}>
+                        Em andamento
+                    </option>
+
+                    <option value="Concluída"
+                        {% if plantacao.status == "Concluída" %}selected{% endif %}>
+                        Concluída
+                    </option>
+                </select>
+            </div>
+
+            <button type="submit" class="botao-formulario">
+                Salvar alterações
+            </button>
+
+        </form>
+
+        <a href="{{ url_for('dashboard') }}" class="voltar-painel">
+            ← Voltar ao painel
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

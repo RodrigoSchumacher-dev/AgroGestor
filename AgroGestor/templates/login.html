@@ -1,0 +1,61 @@
+
+{% extends "layout.html" %}
+
+{% block conteudo %}
+
+<section class="auth-container">
+
+<div class="auth-card">
+
+    <div class="auth-icon">🌾</div>
+
+    <h2>Bem-vindo de volta!</h2>
+
+    <p class="auth-descricao">
+        Entre na sua conta para acompanhar a gestão da sua propriedade.
+    </p>
+
+    <form action="{{ url_for('login') }}" method="POST" class="auth-form">
+
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div class="auth-campo">
+            <label for="username">Nome de usuário</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Digite seu nome de usuário"
+                autocomplete="username"
+                required
+            >
+        </div>
+
+        <div class="auth-campo">
+            <label for="password">Senha</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Digite sua senha"
+                autocomplete="current-password"
+                required
+            >
+        </div>
+
+        <button type="submit" class="auth-botao">
+            Entrar no AgroGestor
+        </button>
+
+    </form>
+
+    <p class="auth-alternativa">
+        Ainda não possui uma conta?
+        <a href="{{ url_for('register') }}">Cadastre-se</a>
+    </p>
+
+</div>
+
+</section>
+
+{% endblock %}

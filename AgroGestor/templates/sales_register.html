@@ -1,0 +1,255 @@
+
+{% extends "layout.html" %}
+
+{% block conteudo %}
+
+<div class="formulario-container">
+
+    <div class="formulario-card">
+
+        <div class="formulario-cabecalho">
+            <div class="formulario-icone">🛒</div>
+            <h2>Registrar Venda</h2>
+            <p>Registre a comercialização da sua produção e acompanhe as receitas da propriedade.</p>
+        </div>
+
+        <form
+            method="POST"
+            action="{{ url_for('sales_register') }}"
+            class="formulario-agro"
+            id="form-venda"
+        >
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="campo-formulario">
+                <label for="planting_id">Plantação</label>
+
+                <select
+                    name="planting_id"
+                    id="planting_id"
+                    data-stock-url="{{ url_for('sales_stock', planting_id=0) }}"
+                    required
+                >
+                    <option value="">Selecione uma plantação</option>
+
+                    {% for plantacao in plantacoes %}
+                        <option value="{{ plantacao.id }}">
+                            {{ plantacao.crop_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div id="painel-estoque" class="painel-estoque" hidden>
+                <span class="estoque-titulo">Estoque disponível para venda</span>
+                <strong id="estoque-quantidade">0,00 sacas</strong>
+                <span id="estoque-mensagem"></span>
+            </div>
+
+            <div class="campo-formulario">
+                <label for="quantity">Quantidade vendida (sacas)</label>
+
+                <input
+                    type="number"
+                    name="quantity"
+                    id="quantity"
+                    step="0.01"
+                    min="0.01"
+                    placeholder="Ex: 100.50"
+                    required
+                    disabled
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="price_per_unit">Preço por saca (R$)</label>
+
+                <input
+                    type="number"
+                    name="price_per_unit"
+                    id="price_per_unit"
+                    step="0.01"
+                    min="0.01"
+                    placeholder="Ex: 120.00"
+                    required
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="sale_date">Data da venda</label>
+
+                <input
+                    type="date"
+                    name="sale_date"
+                    id="sale_date"
+                    required
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="notes">Observações (opcional)</label>
+
+                <textarea
+                    name="notes"
+                    id="notes"
+                    rows="4"
+                    placeholder="Adicione informações sobre a venda..."
+                ></textarea>
+            </div>
+
+            <button
+                type="submit"
+                class="botao-formulario"
+                id="botao-venda"
+                disabled
+            >
+                Registrar Venda
+            </button>
+
+        </form>
+
+        <a href="{{ url_for('dashboard') }}" class="voltar-painel">
+            ← Voltar ao Painel
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const plantacaoSelect = document.getElementById("planting_id");
+    const quantidadeInput = document.getElementById("quantity");
+    const painelEstoque = document.getElementById("painel-estoque");
+    const estoqueQuantidade = document.getElementById("estoque-quantidade");
+    const estoqueMensagem = document.getElementById("estoque-mensagem");
+    const botaoVenda = document.getElementById("botao-venda");
+
+    let estoqueDisponivel = 0;
+
+    function formatarQuantidade(valor) {
+        return Number(valor).toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    function atualizarFormulario(quantidade) {
+        estoqueDisponivel = Number(quantidade);
+
+        painelEstoque.hidden = false;
+        estoqueQuantidade.textContent =
+            formatarQuantidade(estoqueDisponivel) + " sacas";
+
+        quantidadeInput.value = "";
+
+        if (estoqueDisponivel > 0) {
+            quantidadeInput.disabled = false;
+            quantidadeInput.max = estoqueDisponivel;
+            botaoVenda.disabled = false;
+
+            estoqueMensagem.textContent =
+                "Você pode vender até " +
+                formatarQuantidade(estoqueDisponivel) +
+                " sacas.";
+        } else {
+            quantidadeInput.disabled = true;
+            quantidadeInput.removeAttribute("max");
+            botaoVenda.disabled = true;
+
+            estoqueMensagem.textContent =
+                "Não há sacas disponíveis para esta plantação.";
+        }
+    }
+
+    plantacaoSelect.addEventListener("change", async function () {
+
+        const plantingId = plantacaoSelect.value;
+
+        painelEstoque.hidden = true;
+        quantidadeInput.disabled = true;
+        quantidadeInput.value = "";
+        quantidadeInput.removeAttribute("max");
+        botaoVenda.disabled = true;
+
+        if (!plantingId) {
+            return;
+        }
+
+        estoqueMensagem.textContent = "Consultando estoque...";
+        painelEstoque.hidden = false;
+        estoqueQuantidade.textContent = "...";
+
+        try {
+            const url = plantacaoSelect.dataset.stockUrl.replace(
+                /0$/,
+                plantingId
+            );
+
+            const resposta = await fetch(url);
+
+            if (!resposta.ok) {
+                throw new Error("Não foi possível consultar o estoque.");
+            }
+
+            const dados = await resposta.json();
+
+            atualizarFormulario(dados.available_stock);
+
+        } catch (erro) {
+            estoqueQuantidade.textContent = "Indisponível";
+            estoqueMensagem.textContent =
+                "Não foi possível consultar o estoque. Tente novamente.";
+
+            quantidadeInput.disabled = true;
+            botaoVenda.disabled = true;
+        }
+    });
+
+    quantidadeInput.addEventListener("input", function () {
+
+        const quantidadeInformada = Number(quantidadeInput.value);
+
+        if (quantidadeInformada > estoqueDisponivel) {
+            quantidadeInput.setCustomValidity(
+                "A quantidade não pode ser maior que o estoque disponível."
+            );
+            estoqueMensagem.textContent =
+                "Atenção: você possui apenas " +
+                formatarQuantidade(estoqueDisponivel) +
+                " sacas disponíveis.";
+        } else {
+            quantidadeInput.setCustomValidity("");
+
+            estoqueMensagem.textContent =
+                "Você pode vender até " +
+                formatarQuantidade(estoqueDisponivel) +
+                " sacas.";
+        }
+    });
+
+    document.getElementById("form-venda").addEventListener("submit", function (evento) {
+
+        const quantidadeInformada = Number(quantidadeInput.value);
+
+        if (
+            quantidadeInput.disabled ||
+            quantidadeInformada <= 0 ||
+            quantidadeInformada > estoqueDisponivel
+        ) {
+            evento.preventDefault();
+
+            quantidadeInput.setCustomValidity(
+                "Informe uma quantidade válida dentro do estoque disponível."
+            );
+
+            quantidadeInput.reportValidity();
+        }
+    });
+
+});
+</script>
+
+{% endblock %}

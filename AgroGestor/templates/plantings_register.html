@@ -1,0 +1,83 @@
+
+{% extends "layout.html" %}
+
+{% block conteudo %}
+
+<section class="formulario-container">
+
+    <div class="formulario-card">
+
+        <div class="formulario-cabecalho">
+            <div class="formulario-icone">🌱</div>
+
+            <h2>Nova Plantação</h2>
+
+            <p>
+                Cadastre uma nova cultura e informe a situação atual
+                da plantação na sua propriedade.
+            </p>
+        </div>
+
+        <form action="{{ url_for('plantings_register') }}" method="POST" class="formulario-agro">
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="campo-formulario">
+                <label for="crop_name">Nome da cultura</label>
+                <input
+                    type="text"
+                    id="crop_name"
+                    name="crop_name"
+                    placeholder="Ex: Soja, Milho, Feijão"
+                    required
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="area">Área plantada (hectares)</label>
+                <input
+                    type="number"
+                    id="area"
+                    name="area"
+                    step="0.01"
+                    min="0.01"
+                    placeholder="Ex: 15.50"
+                    required
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="planting_date">Data do plantio</label>
+                <input
+                    type="date"
+                    id="planting_date"
+                    name="planting_date"
+                    required
+                >
+            </div>
+
+            <div class="campo-formulario">
+                <label for="status">Situação da plantação</label>
+
+                <select id="status" name="status" required>
+                    <option value="Planejada" selected>Planejada</option>
+                    <option value="Em andamento">Em andamento</option>
+                    <option value="Concluída">Concluída</option>
+                </select>
+            </div>
+
+            <button type="submit" class="botao-formulario">
+                Cadastrar plantação
+            </button>
+
+        </form>
+
+        <a href="{{ url_for('dashboard') }}" class="voltar-painel">
+            ← Voltar ao painel
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

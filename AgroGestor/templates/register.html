@@ -1,0 +1,73 @@
+
+{% extends "layout.html" %}
+
+{% block conteudo %}
+
+<section class="auth-container">
+
+<div class="auth-card">
+
+    <div class="auth-icon">🌱</div>
+
+    <h2>Criar sua conta</h2>
+
+    <p class="auth-descricao">
+        Comece a organizar e acompanhar a gestão da sua propriedade rural.
+    </p>
+
+    <form action="{{ url_for('register') }}" method="POST" class="auth-form">
+
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div class="auth-campo">
+            <label for="username">Nome de usuário</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Digite seu nome de usuário"
+                autocomplete="username"
+                required
+            >
+        </div>
+
+        <div class="auth-campo">
+            <label for="email">E-mail</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Digite seu e-mail"
+                autocomplete="email"
+                required
+            >
+        </div>
+
+        <div class="auth-campo">
+            <label for="password">Senha</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Crie uma senha"
+                autocomplete="new-password"
+                required
+            >
+        </div>
+
+        <button type="submit" class="auth-botao">
+            Criar minha conta
+        </button>
+
+    </form>
+
+    <p class="auth-alternativa">
+        Já possui uma conta?
+        <a href="{{ url_for('login') }}">Faça login</a>
+    </p>
+
+</div>
+
+</section>
+
+{% endblock %}

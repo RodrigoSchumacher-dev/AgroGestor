@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AgroGestor | Gestão Rural</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header>
+        <div class="cabecalho-conteudo">
+
+            <div class="marca">
+                <h1>
+                    <a href="{{ url_for('index') }}">AgroGestor</a>
+                </h1>
+
+                <p>Gestão rural simples e inteligente</p>
+            </div>
+
+            <nav>
+                {% if session.get("user_id") %}
+                    <a href="{{ url_for('index') }}">Início</a>
+                    <a href="{{ url_for('dashboard') }}">Painel</a>
+                    <a href="{{ url_for('reports') }}">Relatórios</a>
+
+                    <form action="{{ url_for('logout') }}" method="POST" style="display: inline;">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit">Sair</button>
+                    </form>
+
+                {% else %}
+                    <a href="{{ url_for('index') }}">Início</a>
+                    <a href="{{ url_for('login') }}">Entrar</a>
+                    <a href="{{ url_for('register') }}">Criar conta</a>
+                {% endif %}
+            </nav>
+
+        </div>
+    </header>
+
+    <main>
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% if mensagens %}
+                {% for categoria, mensagem in mensagens %}
+                    <div class="mensagem {{ categoria }}">
+                        {{ mensagem }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block conteudo %}{% endblock %}
+
+    </main>
+
+    <footer>
+        <h3>AgroGestor</h3>
+
+        <p>Gestão rural simples e inteligente.</p>
+
+        <p class="copyright">
+            &copy; 2026 AgroGestor. Todos os direitos reservados.
+        </p>
+    </footer>
+
+</body>
+</html>
